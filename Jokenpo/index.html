@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=500, initial-scale=1">
+	<title>JOKENPO</title>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link href="https://fonts.googleapis.com/css?family=Libre+Franklin:700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+	<h1>JOKENPO</h1>
+	<div class="fundo">
+		<h2 id="pontos">0 X 0</h2>
+		<img src="img/PoseE.png" class="parado" id="E">
+		<img src="img/PoseD.png" class="parado" id="D">
+		<button onclick="jogar()" class= "button1" id="BTN">JOGAR</button>
+	</div>
+	<button onclick="zerar()" class= "button2" id ="BTN2">ZERAR</button>
+
+	<script>
+		
+		var pontos = document.getElementById('pontos')
+		var p1 = document.getElementById('E')
+		var p2 = document.getElementById('D')
+		var btn = document.getElementById('BTN')
+		var btn2 = document.getElementById('BTN2')
+		
+		var ponto_p1 = 0
+		var ponto_p2 = 0
+		
+
+		function zerar(){
+
+			ponto_p1 = 0
+			ponto_p2 = 0
+					pontos.innerHTML = `${ponto_p1} X ${ponto_p2}`
+
+		}
+
+		function jogar(){
+			//Bloqueia o jogador de apertar duas vezes no botão
+			btn.setAttribute('onclick','nada()')
+
+			//Gera número aleatório que equivale a uma posição de mão
+			var a1 = Math.floor(Math.random() * 3) + 1
+			var a2 = Math.floor(Math.random() * 3) + 1
+		
+			//Faz a animação de movimento inicial	
+			p1.setAttribute('class','parado movendo')
+			p2.setAttribute('class','parado movendo')
+
+			//Delay para esperar animação terminar
+			setTimeout(function() {
+				//Converte o numero em imagem
+				switch (a1) {
+					case 1:
+					p1.setAttribute('src','img/PedraD.png')	
+					break;
+					case 2:
+					p1.setAttribute('src','img/PapelD.png')	
+					break;
+					case 3:
+					p1.setAttribute('src','img/TesouraD.png')	
+					break;
+				}
+				switch (a2) {
+					case 1:
+					p2.setAttribute('src','img/PedraE.png')	
+					break;
+					case 2:
+					p2.setAttribute('src','img/PapelE.png')	
+					break;
+					case 3:
+					p2.setAttribute('src','img/TesouraE.png')	
+					break;
+				}
+				//Volta a classe para que possa ocorrer outro loop
+				p1.setAttribute('class','parado')
+				p2.setAttribute('class','parado')
+
+				//Sistema de pontuação
+				if (a1 == 1 && a2 == 2) {
+					ponto_p2++
+					pontos.innerHTML = `${ponto_p1} X ${ponto_p2}`
+				} 
+				
+				else if (a1 == 1 && a2 == 3) {
+					ponto_p1++
+					pontos.innerHTML = `${ponto_p1} X ${ponto_p2}`
+				}
+				
+				else if (a1 == 2 && a2 == 1) {
+					ponto_p1++
+					pontos.innerHTML = `${ponto_p1} X ${ponto_p2}`
+				}
+				
+				else if (a1 == 2 && a2 == 3) {
+					ponto_p2++
+					pontos.innerHTML = `${ponto_p1} X ${ponto_p2}`					
+				}
+				
+				else if (a1 == 3 && a2 == 1) {
+					ponto_p2++
+					pontos.innerHTML = `${ponto_p1} X ${ponto_p2}`
+				}
+				
+				else if (a1 == 3 && a2 == 2) {
+					ponto_p1++
+					pontos.innerHTML = `${ponto_p1} X ${ponto_p2}`
+				}
+  			}, 1400)
+			setTimeout(function(){ 
+				p1.setAttribute('src','img/PoseE.png')	
+				p2.setAttribute('src','img/PoseD.png')
+			}, 3000)	
+			//Permite que o jogador aperte o botão novamente
+			setTimeout(function(){ btn.setAttribute('onclick','jogar()'); btn.innerHTML = "JOGAR"}, 3000)
+
+		}
+  		
+		function nada(){
+  			//Não faz nada mesmo
+  		}
+	</script>
+</body>
+</html>
